@@ -1,0 +1,13 @@
+main {
+  margin-top: 0;
+}
+
+.search-bar {
+  width: 55%;
+  position: static;
+  border: none;
+}
+
+.short-container {
+  height: 82vh;
+}
