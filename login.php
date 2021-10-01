@@ -66,9 +66,9 @@
             }
           ?>
 
-          <label for="user">
-            Usuario:
-            <input type="text" name="user" required />
+          <label for="email">
+            Correo electrónico:
+            <input type="text" name="email" required />
           </label>
 
           <?php
