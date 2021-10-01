@@ -69,9 +69,9 @@
             <input type="text" name="state" required />
           </label>
 
-          <label for="user">
+          <label for="email">
             Correo electrónico :
-            <input type="email" name="user" required />
+            <input type="email" name="email" required />
           </label>
 
           <?php
