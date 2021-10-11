@@ -70,3 +70,15 @@ nav ul li a {
   color: var(--primary-color);
   font-weight: 550;
 }
+
+.products-container {
+  grid-template-columns: 1fr 1fr;
+}
+
+.bag-container {
+  grid-template-columns: 2fr 1fr;
+}
+
+.bag__total-container {
+  grid-column: 2;
+}

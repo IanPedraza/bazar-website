@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bazar | Cuenta</title>
+    <title>Bazar | Nuevo</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
@@ -32,9 +32,6 @@
       }
 
       $userId = $_SESSION['userId'];
-
-      $db = mysqli_connect("localhost", "root", "");
-      mysqli_select_db($db, "bazar");  
     ?>
 
     <header class="header">
@@ -69,8 +66,8 @@
       <section class="header-account-container">
         <div class="grid-container account-options">
           <ul>
-            <li><a href="./new.php">Nuevo</a></li>
-            <li><a href="./account.php" class="selected">Mis Productos</a></li>
+            <li><a href="./new.php" class="selected">Nuevo</a></li>
+            <li><a href="./account.php">Mis Productos</a></li>
             <li><a href="#">Historial de Ventas</a></li>
             <li><a href="#">Estadísticas</a></li>
             <li><a href="./endpoint-logout.php">Salir</a></li>
@@ -79,31 +76,51 @@
       </section>
     </header>
     <main>
-      <section class="grid-container products-container">
-        <?php
-          $products = mysqli_query($db, "select product_id, title, stock from products where seller_id='".$userId."' AND isDeleted=0 AND stock > 0");
+      <section class="grid-container">
+        <form action="./endpoint-add-product.php" method="POST" enctype="multipart/form-data">
+          <h2>Agregar nuevo producto</h2>
 
-          while($product = mysqli_fetch_array($products)) {
-            $productId = $product['product_id'];
-            $title = $product['title'];
-            $stock = $product['stock'];
-
-            if ($imageQuery = mysqli_query($db, "select image from images where product_id='".$productId."' limit 1;")) {
-              $data = mysqli_fetch_array($imageQuery);
-              $image = $data['image'];
-
-              echo "
-                <article class='product-item'>
-                  <a href='#'>
-                    <img src='./assets/productsImages/$image' alt='Imagen de $title' />
-                    <h3>$title</h3>
-                    <p>".$stock." disponibles</p>
-                  </a>
-                </article>
-              ";
+          <?php
+            if(isset($errorRigisteringProduct)){
+              echo "<p class='error'>$errorRigisteringProduct</p>";
             }
-          }
-        ?>  
+          ?>
+
+          <label for="title">
+            Titulo:
+            <input type="text" name="title" required />
+          </label>
+
+          <label for="description">
+            Descripción:
+            <input type="text" name="description" required />
+          </label>
+
+          <label for="status">
+            Status:
+            <select name="status" id="status" required>
+              <option value="nuevo">Nuevo</option>
+              <option value="usado">Usado</option>
+            </select>
+          </label>
+
+          <label for="price">
+            Precio:
+            <input type="number" name="price" required />
+          </label>
+
+          <label for="stock">
+            Cantidad disponible:
+            <input type="number" name="stock" required />
+          </label>
+
+          <label for="photos[]">
+            Fotos del producto:
+            <input type="file" name="photos[]" accept="image/png, image/jpeg, image/webp" multiple required />
+          </label>
+
+          <input class="button--form" type="submit" value="Agregar Producto">
+        </form>
       </section>
     </main>
     <footer class="footer">

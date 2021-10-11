@@ -18,7 +18,7 @@
     <link
       rel="stylesheet"
       href="./styles/desktop.css"
-      media="(min-width: 720px)"
+      media="(min-width: 850px)"
     />
   </head>
   <body>
@@ -32,11 +32,18 @@
           <ul>
             <li><a href="./about.php">Acerca de</a></li>
             <li>
-              <a href="./account.php"
-                ><span class="icon material-icons-outlined">
+              <a href="./bag.php"> 
+                <span class="icon material-icons-outlined">
+                  shopping_bag
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="./login.php"> 
+                <span class="icon material-icons-outlined">
                   account_circle
-                </span></a
-              >
+                </span>
+              </a>
             </li>
           </ul>
         </nav>

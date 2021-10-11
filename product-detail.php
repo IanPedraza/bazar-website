@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bazar | Cuenta</title>
+    <title>Bazar</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
@@ -22,23 +22,8 @@
     />
   </head>
   <body>
-    <?php 
-      if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_NONE) {
-        session_start();
-      }
-
-      if (!isset($_SESSION['userId'])) {
-        header('Location:login.php');
-      }
-
-      $userId = $_SESSION['userId'];
-
-      $db = mysqli_connect("localhost", "root", "");
-      mysqli_select_db($db, "bazar");  
-    ?>
-
     <header class="header">
-      <section class="grid-container header-main-container">
+      <div class="grid-container header-main-container">
         <a href="./index.php" class="header__logo">
           <img src="./assets/images/logo.png" alt="logo del bazar" />
         </a>
@@ -65,45 +50,71 @@
         <a href="#" class="button--hamburger">
           <span class="icon material-icons-outlined"> menu </span>
         </a>
-      </section>
-      <section class="header-account-container">
-        <div class="grid-container account-options">
-          <ul>
-            <li><a href="./new.php">Nuevo</a></li>
-            <li><a href="./account.php" class="selected">Mis Productos</a></li>
-            <li><a href="#">Historial de Ventas</a></li>
-            <li><a href="#">Estadísticas</a></li>
-            <li><a href="./endpoint-logout.php">Salir</a></li>
-          </ul>
-        </div>
-      </section>
+      </div>
     </header>
     <main>
-      <section class="grid-container products-container">
+      <section class="grid-container product-detail-container">
         <?php
-          $products = mysqli_query($db, "select product_id, title, stock from products where seller_id='".$userId."' AND isDeleted=0 AND stock > 0");
+          if (!isset($productId)) {
+            $productId = $_REQUEST['id'];
+          }
+
+          if ($productId == null)  header("Location:index.php");
+
+          function toPrice($number) {
+            return "$".number_format($number, 2,'.', ',');
+          }
+
+          $db = mysqli_connect("localhost", "root", "");
+          mysqli_select_db($db, "bazar");  
+          
+          $products = mysqli_query($db, "select * from products where product_id='".$productId."';");
 
           while($product = mysqli_fetch_array($products)) {
-            $productId = $product['product_id'];
             $title = $product['title'];
+            $description = $product['description'];
+            $status = $product['status'];
+            $price = $product['price'];
             $stock = $product['stock'];
 
             if ($imageQuery = mysqli_query($db, "select image from images where product_id='".$productId."' limit 1;")) {
               $data = mysqli_fetch_array($imageQuery);
               $image = $data['image'];
-
-              echo "
-                <article class='product-item'>
-                  <a href='#'>
-                    <img src='./assets/productsImages/$image' alt='Imagen de $title' />
-                    <h3>$title</h3>
-                    <p>".$stock." disponibles</p>
-                  </a>
-                </article>
-              ";
             }
           }
         ?>  
+
+        <div class="product-detail__gallery">
+          <?php 
+            echo "<img src='./assets/productsImages/$image' alt='Imagen de $title' />";
+          ?>
+        </div>
+
+        <div class="product-detail__data">
+          <?php 
+            echo "
+            <h2 class='product-detail__title'>".$title."</h2>
+            <p class='product-detail__price'>".toPrice($price)."</p>
+            <p class='product-detail__status'>".$status."</p>
+            <p class='product-detail__stock'>".$stock." Disponible(s)</p>
+            <p class='product-detail__description'>".$description."</p>
+            ";
+          ?>
+
+          <form class="form--hidden-button" action="./endpoint-add-to-bag.php" method="POST">
+            <?php 
+              echo "<input type='hidden' name='productId' value='".$productId."'>";
+            ?>
+            <input class="button--form" type="submit" value="Agregar a la bolsa">
+
+            <?php
+              if(isset($errorMessage)){
+                echo "<p class='error'>$errorMessage</p>";
+              }
+            ?>
+          </form>
+        </div>
+
       </section>
     </main>
     <footer class="footer">
