@@ -36,7 +36,10 @@
   mysqli_select_db($db, "bazar");
 
   if(mysqli_query($db, "update products set title='".$title."', description='".$description."', status='".$status."', price='".$price."', stock='".$stock."' where product_id='".$productId."';")) {
-
+    
+    for($i = 0 ; $i < $numberOfPhotos; $i++) { 
+      mysqli_query($db, "insert into images(product_id, image) values(".$productId.", '".$images[$i]."');");
+    }
     header("Location:account.php");
   } else {
     $errorRigisteringProduct = "No se pudo actualizar el producto";

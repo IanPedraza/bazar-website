@@ -1,0 +1,13 @@
+.image-detail{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    margin: 12px 0;
+}
+
+.image-detail .button--form{
+    width: 50%;
+    height: 60%;
+    margin: auto;
+    padding: 5px;
+}

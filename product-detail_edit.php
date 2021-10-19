@@ -20,6 +20,7 @@
       href="./styles/desktop.css"
       media="(min-width: 850px)"
     />
+    <link rel="stylesheet" href="./styles/card-image_detail.css">
   </head>
   <body>
     <header class="header">
@@ -85,46 +86,20 @@
         ?>  
 
         <div class="product-detail__gallery">
-        <scroll-container class="slider-container" style="display: block;
-            overflow: auto;
-            scroll-behavior: smooth;
-            white-space: nowrap;
-            font-size: 0;">
-            
-            <?php 
-            $imageQuery = mysqli_query($db, "select image from images where product_id='".$productId."';");
-            while($picture = mysqli_fetch_array($imageQuery)) {
-              $image = $picture['image'];
-              echo "
-              <scroll-page class='slider-slide' id='image-$image'>
-                <img src='./assets/productsImages/$image' alt='Imagen de $title' class='image' style='margin: 0;
-                display: inline-block;
-                width: 100%;
-                height: 100%;
-                background-repeat:no-repeat;
-                object-fit: cover;
-                aspect-ratio: 16/9;'/>
-              </scroll-page>
-              ";
-            }
-          ?>
-            
-          </scroll-container>
-          <div class="slider-bullet-list" style="text-align: center;
-          margin-block-start: 10px;">
-           <?php 
-           $imageQuery = mysqli_query($db, "select image from images where product_id='".$productId."';");
-           while($picture = mysqli_fetch_array($imageQuery)) {
-             $image = $picture['image'];
-              echo "
-                <a href='#image-$image' class='slider-bullet' style='display: inline-block;
-                inline-size: 15px;
-                block-size: 15px;
-                background: black;
-                border-radius: 50%;'></a>
-              ";
-           }
-          ?>
+          <div class="view-image">
+          <?php 
+              $imageQuery = mysqli_query($db, "select image from images where product_id='".$productId."';");
+              while($picture = mysqli_fetch_array($imageQuery)) {
+                $image = $picture['image'];
+                echo "
+                <form class='image-detail' id='image-$image' action='./endpoint-delete-image.php' method='POST'>
+                  <img src='./assets/productsImages/$image' alt='Imagen de $title' class='image'/>
+                  <input type='hidden' name='nameImage' value='".$image."' required/>
+                  <input class='button--form' type='submit' value='Eliminar'>
+                </form>
+                ";
+              }
+              ?>
           </div>
         </div>
 
