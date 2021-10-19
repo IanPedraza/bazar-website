@@ -367,3 +367,35 @@ main {
   height: 100%;
   margin-top: 30px;
 }
+
+
+/*Codigo scrooll-------------*/
+.slider-container{
+  display: block;
+  overflow: auto;
+  scroll-behavior: smooth;
+  white-space: nowrap;
+  font-size: 0;
+}
+
+.image{
+  margin: 0;
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+}
+
+.slider-bullet-list{
+  text-align: center;
+  margin-block-start: 10px;
+}
+
+.slider-bullet{
+  display: inline-block;
+  inline-size: 15px;
+  block-size: 15px;
+  background: rgb(218, 26, 26);
+  border-radius: 50%;
+}
+

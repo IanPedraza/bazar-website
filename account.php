@@ -94,7 +94,7 @@
 
               echo "
                 <article class='product-item'>
-                  <a href='#'>
+                  <a href='./product-detail_edit.php?id=".$productId."'>
                     <img src='./assets/productsImages/$image' alt='Imagen de $title' />
                     <h3>$title</h3>
                     <p>".$stock." disponibles</p>

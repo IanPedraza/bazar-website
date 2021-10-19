@@ -85,7 +85,7 @@
         ?>  
 
         <div class="product-detail__gallery">
-          <scroll-container class="slider-container" style="display: block;
+        <scroll-container class="slider-container" style="display: block;
             overflow: auto;
             scroll-behavior: smooth;
             white-space: nowrap;
@@ -128,22 +128,72 @@
           </div>
         </div>
 
-        <div class="product-detail__data">
+        <div class="grid-container">
           <?php 
             echo "
-            <h2 class='product-detail__title'>".$title."</h2>
-            <p class='product-detail__price'>".toPrice($price)."</p>
-            <p class='product-detail__status'>".$status."</p>
-            <p class='product-detail__stock'>".$stock." Disponible(s)</p>
-            <p class='product-detail__description'>".$description."</p>
+            <form action='./endpoint-edit-product.php' method='POST' enctype='multipart/form-data'>
+              <h2>Editar producto</h2>
+              <label for='title'>
+              Titulo:
+              <input type='text' name='title' value='".$title."' required/>
+              </label>
+
+              <label for='description'>
+              Descripción:
+              <input type='text' name='description' value='".$description."' required />
+              </label>
+              ";
+
+              if($status == 'Nuevo' || $status == 'nuevo'){
+                echo "
+                <label for='status'>
+                  Status:
+                  <select name='status' id='status' required>
+                    <option value='nuevo' selected>".$status."</option>
+                    <option value='usado'>Usado</option>
+                  </select>
+                </label>
+                ";
+              }else{
+                echo "
+                <label for='status'>
+                  Status:
+                  <select name='status' id='status' required>
+                    <option value='nuevo'>Nuevo</option>
+                    <option value='usado' selected>".$status."</option>
+                  </select>
+                </label>
+                ";
+              }
+
+              echo "
+              <label for='price'>
+                Precio:
+                <input type='number' name='price' value='".$price."' required />
+              </label>
+
+              <label for='stock'>
+              Cantidad disponible:
+              <input type='number' name='stock' value='".$stock."' required />
+              </label>
+
+              <label for='photos[]'>
+              Fotos del producto:
+              <input type='file' name='photos[]' accept='image/png, image/jpeg, image/webp' multiple/>
+              </label>
+
+              <input type='hidden' name='productId' value='".$productId."'>
+
+              <input class='button--form' type='submit' value='Editar Producto'>
+            </form>
             ";
           ?>
 
-          <form class="form--hidden-button" action="./endpoint-add-to-bag.php" method="POST">
+          <form class="form--hidden-button" action="./endpoint-delete-product.php" method="POST">
             <?php 
               echo "<input type='hidden' name='productId' value='".$productId."'>";
             ?>
-            <input class="button--form" type="submit" value="Agregar a la bolsa">
+            <input class="button--form" type="submit" value="Eliminar" style="background-color:#FF1F1A;">
 
             <?php
               if(isset($errorMessage)){
