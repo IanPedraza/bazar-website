@@ -20,6 +20,7 @@
       href="./styles/desktop.css"
       media="(min-width: 850px)"
     />
+    <link rel="stylesheet" href="./styles/card-image_detail.css">
   </head>
   <body>
     <header class="header">
@@ -85,53 +86,90 @@
         ?>  
 
         <div class="product-detail__gallery">
-          <scroll-container class="slider-container">
-            
-            <?php 
+          <div class="view-image">
+          <?php 
               $imageQuery = mysqli_query($db, "select image from images where product_id='".$productId."';");
-              
               while($picture = mysqli_fetch_array($imageQuery)) {
                 $image = $picture['image'];
                 echo "
-                <scroll-page class='slider__slide' id='image-$image'>
-                  <img src='./assets/productsImages/$image' alt='Imagen de $title'/>
-                </scroll-page>
+                <form class='image-detail' id='image-$image' action='./endpoint-delete-image.php' method='POST'>
+                  <img src='./assets/productsImages/$image' alt='Imagen de $title' class='image'/>
+                  <input type='hidden' name='nameImage' value='".$image."' required/>
+                  <input class='button--icon--destructive' type='submit' value='X'>
+                </form>
                 ";
               }
-            ?>
-            
-          </scroll-container>
-
-          <div class="slider__bullet-list">
-           <?php 
-            $imageQuery = mysqli_query($db, "select image from images where product_id='".$productId."';");
-            
-            while($picture = mysqli_fetch_array($imageQuery)) {
-              $image = $picture['image'];
-                echo "
-                  <a href='#image-$image' class='slider-bullet'></a>
-                ";
-            }
-            ?>
+              ?>
           </div>
         </div>
 
-        <div class="product-detail__data">
+        <div>
           <?php 
             echo "
-            <h2 class='product-detail__title'>".$title."</h2>
-            <p class='product-detail__price'>".toPrice($price)."</p>
-            <p class='product-detail__status'>".$status."</p>
-            <p class='product-detail__stock'>".$stock." Disponible(s)</p>
-            <p class='product-detail__description'>".$description."</p>
+            <form action='./endpoint-edit-product.php' method='POST' enctype='multipart/form-data'>
+              <h2>Editar producto</h2>
+              <label for='title'>
+              Titulo:
+              <input type='text' name='title' value='".$title."' required/>
+              </label>
+
+              <label for='description'>
+              Descripción:
+              <input type='text' name='description' value='".$description."' required />
+              </label>
+              ";
+
+              if($status == 'Nuevo' || $status == 'nuevo'){
+                echo "
+                <label for='status'>
+                  Status:
+                  <select name='status' id='status' required>
+                    <option value='nuevo' selected>".$status."</option>
+                    <option value='usado'>Usado</option>
+                  </select>
+                </label>
+                ";
+              }else{
+                echo "
+                <label for='status'>
+                  Status:
+                  <select name='status' id='status' required>
+                    <option value='nuevo'>Nuevo</option>
+                    <option value='usado' selected>".$status."</option>
+                  </select>
+                </label>
+                ";
+              }
+
+              echo "
+              <label for='price'>
+                Precio:
+                <input type='number' name='price' value='".$price."' required />
+              </label>
+
+              <label for='stock'>
+              Cantidad disponible:
+              <input type='number' name='stock' value='".$stock."' required />
+              </label>
+
+              <label for='photos[]'>
+              Fotos del producto:
+              <input type='file' name='photos[]' accept='image/png, image/jpeg, image/webp' multiple/>
+              </label>
+
+              <input type='hidden' name='productId' value='".$productId."'>
+
+              <input class='button--form' type='submit' value='Guardar'>
+            </form>
             ";
           ?>
 
-          <form class="form--hidden-button" action="./endpoint-add-to-bag.php" method="POST">
+          <form action="./endpoint-delete-product.php" method="POST">
             <?php 
               echo "<input type='hidden' name='productId' value='".$productId."'>";
             ?>
-            <input class="button--form" type="submit" value="Agregar a la bolsa">
+
+            <input class="button--form-destructive" type="submit" value="Eliminar">
 
             <?php
               if(isset($errorMessage)){
