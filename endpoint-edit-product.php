@@ -21,6 +21,11 @@
 
   for($i = 0 ; $i < $numberOfPhotos; $i++) {
     $tmpName = $photos['name'][$i];
+
+    if (empty($tmpName)) {
+      continue;
+    }
+
     $ext = pathinfo($tmpName, PATHINFO_EXTENSION);    
     
     $tmpFilePath = $photos['tmp_name'][$i];
@@ -32,6 +37,8 @@
     $images[$i] = $newName;
   }
 
+  $numberOfPhotos = count($images);
+
   $db = mysqli_connect("localhost", "root", "");
   mysqli_select_db($db, "bazar");
 
@@ -40,6 +47,7 @@
     for($i = 0 ; $i < $numberOfPhotos; $i++) { 
       mysqli_query($db, "insert into images(product_id, image) values(".$productId.", '".$images[$i]."');");
     }
+
     header("Location:account.php");
   } else {
     $errorRigisteringProduct = "No se pudo actualizar el producto";

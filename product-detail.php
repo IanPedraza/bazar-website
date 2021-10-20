@@ -85,46 +85,34 @@
         ?>  
 
         <div class="product-detail__gallery">
-          <scroll-container class="slider-container" style="display: block;
-            overflow: auto;
-            scroll-behavior: smooth;
-            white-space: nowrap;
-            font-size: 0;">
+          <scroll-container class="slider-container">
             
             <?php 
-            $imageQuery = mysqli_query($db, "select image from images where product_id='".$productId."';");
-            while($picture = mysqli_fetch_array($imageQuery)) {
-              $image = $picture['image'];
-              echo "
-              <scroll-page class='slider-slide' id='image-$image'>
-                <img src='./assets/productsImages/$image' alt='Imagen de $title' class='image' style='margin: 0;
-                display: inline-block;
-                width: 100%;
-                height: 100%;
-                background-repeat:no-repeat;
-                object-fit: cover;
-                aspect-ratio: 16/9;'/>
-              </scroll-page>
-              ";
-            }
-          ?>
+              $imageQuery = mysqli_query($db, "select image from images where product_id='".$productId."';");
+              
+              while($picture = mysqli_fetch_array($imageQuery)) {
+                $image = $picture['image'];
+                echo "
+                <scroll-page class='slider__slide' id='image-$image'>
+                  <img src='./assets/productsImages/$image' alt='Imagen de $title'/>
+                </scroll-page>
+                ";
+              }
+            ?>
             
           </scroll-container>
-          <div class="slider-bullet-list" style="text-align: center;
-          margin-block-start: 10px;">
+
+          <div class="slider__bullet-list">
            <?php 
-           $imageQuery = mysqli_query($db, "select image from images where product_id='".$productId."';");
-           while($picture = mysqli_fetch_array($imageQuery)) {
-             $image = $picture['image'];
-              echo "
-                <a href='#image-$image' class='slider-bullet' style='display: inline-block;
-                inline-size: 15px;
-                block-size: 15px;
-                background: black;
-                border-radius: 50%;'></a>
-              ";
-           }
-          ?>
+            $imageQuery = mysqli_query($db, "select image from images where product_id='".$productId."';");
+            
+            while($picture = mysqli_fetch_array($imageQuery)) {
+              $image = $picture['image'];
+                echo "
+                  <a href='#image-$image' class='slider-bullet'></a>
+                ";
+            }
+            ?>
           </div>
         </div>
 

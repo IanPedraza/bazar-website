@@ -12,7 +12,8 @@
 }
 
 form {
-  width: 50%;
+  width: 80%;
+  max-width: 512px;
   margin: 50px auto;
 }
 

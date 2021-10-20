@@ -95,7 +95,7 @@
                 <form class='image-detail' id='image-$image' action='./endpoint-delete-image.php' method='POST'>
                   <img src='./assets/productsImages/$image' alt='Imagen de $title' class='image'/>
                   <input type='hidden' name='nameImage' value='".$image."' required/>
-                  <input class='button--form' type='submit' value='Eliminar'>
+                  <input class='button--icon--destructive' type='submit' value='X'>
                 </form>
                 ";
               }
@@ -103,7 +103,7 @@
           </div>
         </div>
 
-        <div class="grid-container">
+        <div>
           <?php 
             echo "
             <form action='./endpoint-edit-product.php' method='POST' enctype='multipart/form-data'>
@@ -159,16 +159,17 @@
 
               <input type='hidden' name='productId' value='".$productId."'>
 
-              <input class='button--form' type='submit' value='Editar Producto'>
+              <input class='button--form' type='submit' value='Guardar'>
             </form>
             ";
           ?>
 
-          <form class="form--hidden-button" action="./endpoint-delete-product.php" method="POST">
+          <form action="./endpoint-delete-product.php" method="POST">
             <?php 
               echo "<input type='hidden' name='productId' value='".$productId."'>";
             ?>
-            <input class="button--form" type="submit" value="Eliminar" style="background-color:#FF1F1A;">
+
+            <input class="button--form-destructive" type="submit" value="Eliminar">
 
             <?php
               if(isset($errorMessage)){
