@@ -83,3 +83,11 @@ nav ul li a {
 .bag__total-container {
   grid-column: 2;
 }
+
+form.checkout-container {
+  grid-template-columns: 2fr 1fr;
+}
+
+.checkout__total-container {
+  margin: 20px;
+}

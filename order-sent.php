@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bazar | Registro</title>
+    <title>Bazar | Orden enviada</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
@@ -22,6 +22,7 @@
     />
   </head>
   <body>
+    
     <header class="header">
       <div class="grid-container header-main-container">
         <a href="./index.php" class="header__logo">
@@ -53,59 +54,11 @@
       </div>
     </header>
     <main>
-      <section class="grid-container">
-        <form action="./endpoint-register.php" method="post">
-          <h2>Registro</h2>
-
-          <label for="name">
-            Nombre:
-            <input type="text" name="name" autocomplete="name" required />
-          </label>
-
-          <label for="phone_number">
-            Numero de telefono:
-            <input type="tel" name="phone_number" autocomplete="tel" required />
-          </label>
-          
-          <label for="city">
-            Ciudad:
-            <input type="text" name="city" autocomplete="street-address" required />
-          </label>
-          
-          <label for="state">
-            Estado:
-            <input type="text" name="state" required />
-          </label>
-
-          <label for="email">
-            Correo electrónico :
-            <input type="email" name="email" autocomplete="email" required />
-          </label>
-
-          <?php
-            if(isset($existenciaError)){
-              echo "<p class='error'>$existenciaError</p>";
-            }
-          ?>
-
-          <label for="password">
-            Password:
-            <input type="password" name="password"  autocomplete="new-password" required />
-          </label>
-          
-          <label for="password_confirm">
-            Confirmación de Password:
-            <input type="password" name="password_confirm" required />
-          </label>
-
-          <?php
-            if(isset($incorrectPassword)){
-              echo "<p class='error'>$incorrectPassword</p>";
-            }
-          ?>
-          
-          <input class="button--form" type="submit" value="Registrarse">
-        </form>
+      <section class="grid-container short-container">
+        <div class="success-container">
+          <h2>¡Orden Enviada!</h2>        
+          <p>Te notificaremos a tu correo eléctronico el avance de tu orden.</p>
+        </div>
       </section>
     </main>
     <footer class="footer">

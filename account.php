@@ -81,7 +81,7 @@
     <main>
       <section class="grid-container products-container">
         <?php
-          $products = mysqli_query($db, "select product_id, title, stock from products where seller_id='".$userId."' AND isDeleted=0 AND stock > 0");
+          $products = mysqli_query($db, "select product_id, title, stock from products where seller_id='".$userId."' AND isDeleted=0;");
 
           while($product = mysqli_fetch_array($products)) {
             $productId = $product['product_id'];

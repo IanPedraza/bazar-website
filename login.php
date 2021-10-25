@@ -75,7 +75,7 @@
 
           <label for="email">
             Correo electrónico:
-            <input type="text" name="email" required />
+            <input type="text" name="email" autocomplete="email" required />
           </label>
 
           <?php
@@ -86,7 +86,7 @@
 
           <label for="password">
             Contraseña:
-            <input type="password" name="password" required />
+            <input type="password" name="password" autocomplete="current-password" required />
           </label>
          
           <?php

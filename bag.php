@@ -102,6 +102,11 @@
                   <div class='bag-item__data-container'>
                     <h2 class='bag-item__title'>".$title."</h2>
                     <p class='bag-item__price'>".toPrice($price)."</p>
+                    ".(
+                      (mysqli_query($db, "call check_product_stock(".$productId.", '".$bagId."');")) 
+                      ? ""
+                      : "<p class='error'>Este producto no tiene stock suficiente.</p>"
+                    )."
                     <form class='form--hidden-button' action='./endpoint-delete-from-bag.php' action='POST'>
                       <input type='hidden' name='itemBagId' value='".$itemBagId."'>
                       <input class='button--text button--bag' type='submit' value='Eliminar'>
@@ -127,11 +132,15 @@
             echo "<p class='bag__total'><b>Total: </b>".toPrice($total)."</p>";
             
             if ($total > 0) {
-              echo "
-                <a href='./checkout.php' class='button'>
-                  Proceder al pago
-                </a>
-              ";
+              if(mysqli_query($db, "call check_stock('".$bagId."')")){
+                echo "
+                  <a href='./checkout.php' class='button'>
+                    Proceder al envío
+                  </a>
+                ";
+              } else {
+                echo "<p class='error'>Uno o más de tus productos no tiene stock suficiente.</p>";
+              }
             }
           ?>
         </div>
