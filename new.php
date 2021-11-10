@@ -68,8 +68,8 @@
           <ul>
             <li><a href="./new.php" class="selected">Nuevo</a></li>
             <li><a href="./account.php">Mis Productos</a></li>
-            <li><a href="#">Historial de Ventas</a></li>
-            <li><a href="#">Estadísticas</a></li>
+            <li><a href="./sales.php">Historial de Ventas</a></li>
+            <li><a href="./statistics.php">Estadísticas</a></li>
             <li><a href="./endpoint-logout.php">Salir</a></li>
           </ul>
         </div>
