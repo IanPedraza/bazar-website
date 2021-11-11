@@ -70,8 +70,8 @@
         <div class="grid-container account-options">
           <ul>
             <li><a href="./new.php">Nuevo</a></li>
-            <li><a href="./account.php" class="selected">Mis Productos</a></li>
-            <li><a href="./sales.php">Historial de Ventas</a></li>
+            <li><a href="./account.php">Mis Productos</a></li>
+            <li><a href="./sales.php" class="selected">Historial de Ventas</a></li>
             <li><a href="./statistics.php">Estadísticas</a></li>
             <li><a href="./endpoint-logout.php">Salir</a></li>
           </ul>
@@ -79,31 +79,58 @@
       </section>
     </header>
     <main>
-      <section class="grid-container products-container">
-        <?php
-          $products = mysqli_query($db, "select product_id, title, stock from products where seller_id='".$userId."' AND isDeleted=0;");
-
-          while($product = mysqli_fetch_array($products)) {
-            $productId = $product['product_id'];
-            $title = $product['title'];
-            $stock = $product['stock'];
-
-            if ($imageQuery = mysqli_query($db, "select image from images where product_id='".$productId."' limit 1;")) {
-              $data = mysqli_fetch_array($imageQuery);
-              $image = $data['image'];
-
-              echo "
-                <article class='product-item'>
-                  <a href='./product-detail_edit.php?id=".$productId."'>
-                    <img src='./assets/productsImages/$image' alt='Imagen de $title' />
-                    <h3>$title</h3>
-                    <p>".$stock." disponibles</p>
-                  </a>
-                </article>
-              ";
+      <section class="grid-container bag-container">
+        <div>
+            <?php
+            function toPrice($number, $n) {
+                $total = $number * $n;
+                return "$".number_format($total, 2,'.', ',');
             }
-          }
-        ?>  
+
+            $total = 0;
+            $sales = mysqli_query($db, "select * from sales where seller_id='".$userId."' ORDER BY date_sale DESC;");
+
+            while($sale = mysqli_fetch_array($sales)) {
+                $orderId = $sale['order_id'];
+                $productId = $sale['product_id'];
+                $quantity = $sale['quantity'];
+                $date = $sale['date_sale'];
+
+                if ($data = mysqli_query($db, "select * from products where product_id='".$productId."'")) {
+                    $product = mysqli_fetch_array($data);
+                    $title = $product['title'];
+                    $price = $product['price'];
+    
+                    if ($imageQuery = mysqli_query($db, "select image from images where product_id='".$productId."' limit 1;")) {
+                      $dataImage = mysqli_fetch_array($imageQuery);
+                      $image = $dataImage['image'];
+                    }
+    
+                    echo "
+                    <article class='bag-item-container'>
+                      <img src='./assets/productsImages/$image' alt='Imagen de $title' />
+                      <div class='bag-item__data-container'>
+                        <h2 class='bag-item__title'>".$title."</h2>
+                        <p class='bag-item__price'>Cantidad: ".$quantity."</p>
+                        <p class='bag-item__price'>Total: ".toPrice($price, $quantity)."</p>
+                        <p class='bag-item__price'>Fecha: ".$date."</p>
+                      </div>
+                    </article>
+                    ";
+                  }
+                
+                $total +=1;
+            }
+
+            if ($total == 0) {
+                echo "
+                <div class='empty-bag'>
+                  <p>No hay ventas</p>
+                </div>
+                ";
+              }
+            ?> 
+        </div> 
       </section>
     </main>
     <footer class="footer">
