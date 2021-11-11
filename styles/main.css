@@ -155,7 +155,7 @@ form label select {
   align-items: center;
   margin: 0 auto;
   padding: 20px;
-  height: 75vh;
+  height: calc(100vh - 200px);
 }
 
 .button--hamburger {
@@ -362,7 +362,7 @@ main {
 .bag-item-container img {
   width: 100px;
   height: 100px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .bag-item__data-container {

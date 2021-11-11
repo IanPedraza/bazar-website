@@ -64,7 +64,8 @@
       </section>
     </header>
     <main>
-    <?php 
+      <div class="short-container">
+      <?php 
         if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_NONE) {
           session_start();
         }
@@ -115,9 +116,10 @@
             }
         ?>
 
-        <section class="grid-container chart-container">
-          <img src="./generated/chart.png" alt="Gráfica del número de ventas">
-        </section>
+    <section class="chart-container">
+      <img src="./generated/chart.png" alt="Gráfica del número de ventas">
+    </section>
+      </div>
     </main>
     <footer class="footer">
       <p>Bazar®</p>
