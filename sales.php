@@ -42,7 +42,11 @@
         <a href="./index.php" class="header__logo">
           <img src="./assets/images/logo.png" alt="logo del bazar" />
         </a>
-        <input class="search-bar" type="text" placeholder="Buscar" />
+        <form action="./search-results.php" method="POST" class="search">
+          <form action="" class="search">
+          <input class="search-bar" type="text" name="textSearch" placeholder="Buscar" />
+          <input type="submit" value="Buscar" class="search-button">
+        </form>
         <nav>
           <ul>
             <li><a href="./about.php">Acerca de</a></li>
@@ -111,9 +115,11 @@
                       <img src='./assets/productsImages/$image' alt='Imagen de $title' />
                       <div class='bag-item__data-container'>
                         <h2 class='bag-item__title'>".$title."</h2>
-                        <p class='bag-item__price'>Cantidad: ".$quantity."</p>
-                        <p class='bag-item__price'>Total: ".toPrice($price, $quantity)."</p>
-                        <p class='bag-item__price'>Fecha: ".$date."</p>
+                        <div class='bag-item__data-detail'> 
+                          <p class='bag-item__price'>Cantidad: ".$quantity."</p>
+                          <p class='bag-item__price'>Total: ".toPrice($price, $quantity)."</p>
+                        </div>
+                        <p class='bag-item__detail'>Fecha: ".$date."</p>
                       </div>
                     </article>
                     ";

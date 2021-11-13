@@ -6,10 +6,25 @@ main {
   max-width: 300px;
 }
 
-.search-bar {
+.search{
   width: 55%;
   position: static;
+}
+
+.search-bar {
+  width: 80%; /*55%*/
+  /*position: static;*/
   border: none;
+}
+
+.search-button{
+  width: 15%;
+  padding: 8px;
+  color:  var(--light-color);
+  background: var(--primary-color);
+  outline: none;
+  border: 1px solid var(--light-color);
+  cursor: pointer;
 }
 
 .short-container {

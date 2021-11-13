@@ -27,7 +27,11 @@
         <a href="./index.php" class="header__logo">
           <img src="./assets/images/logo.png" alt="logo del bazar" />
         </a>
-        <input class="search-bar" type="text" placeholder="Buscar" />
+        <form action="./search-results.php" method="POST" class="search">
+          <form action="" class="search">
+          <input class="search-bar" type="text" name="textSearch" placeholder="Buscar" />
+          <input type="submit" value="Buscar" class="search-button">
+        </form>
         <nav>
           <ul>
             <li><a href="./about.php">Acerca de</a></li>
@@ -55,6 +59,9 @@
     <main>
     <section class="grid-container products-container">
         <?php
+          if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_NONE) {
+            session_start();
+          }
           function toPrice($number) {
             return "$".number_format($number, 2,'.', ',');
           }
@@ -62,8 +69,13 @@
           $db = mysqli_connect("localhost", "root", "");
           mysqli_select_db($db, "bazar");  
           
-          $products = mysqli_query($db, "select product_id, title, price from products where isDeleted=0 AND stock > 0;");
-
+          if (isset($_SESSION['userId'])) {
+            $userId = $_SESSION['userId'];
+            $products = mysqli_query($db, "select product_id, title, price from products where seller_id != '".$userId."' AND isDeleted=0 AND stock > 0;");
+            
+          }else{
+            $products = mysqli_query($db, "select product_id, title, price from products where isDeleted=0 AND stock > 0;");
+          }
           while($product = mysqli_fetch_array($products)) {
             $productId = $product['product_id'];
             $title = $product['title'];

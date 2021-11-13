@@ -196,15 +196,33 @@ nav {
   width: 100%;
 }
 
-.search-bar {
+.search{
   width: 90%;
-  padding: 10px 10px;
   position: absolute;
   top: calc(100% + 20px);
-  left: 5%;
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+
+.search-bar {
+  width: 78%;
+  padding: 10px 10px;
+  /*position: absolute;
+  top: calc(100% + 20px);
+  left: 5%;*/
   outline: none;
   border: 1px solid grey;
   border-radius: 2px;
+}
+
+.search-button{
+  padding: 10px;
+  color:  var(--light-color);
+  background: var(--primary-color);
+  outline: none;
+  border: 1px solid var(--light-color);
+  cursor: pointer;
 }
 
 main {
@@ -370,6 +388,11 @@ main {
   margin-left: 20px;
 }
 
+.bag-item__data-detail{
+  display: flex;
+  justify-content: space-between;
+}
+
 .bag-item__title {
   font-size: 2.4rem;
 }
@@ -378,6 +401,11 @@ main {
   margin-top: 5px;
   color: var(--primary-color);
   font-weight: 600;
+}
+
+.bag-item__detail{
+  font-size: 1.6rem;
+  font-weight: 500;
 }
 
 .bag__total {

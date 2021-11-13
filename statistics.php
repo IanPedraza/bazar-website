@@ -27,7 +27,11 @@
         <a href="./index.php" class="header__logo">
           <img src="./assets/images/logo.png" alt="logo del bazar" />
         </a>
-        <input class="search-bar" type="text" placeholder="Buscar" />
+        <form action="./search-results.php" method="POST" class="search">
+          <form action="" class="search">
+          <input class="search-bar" type="text" name="textSearch" placeholder="Buscar" />
+          <input type="submit" value="Buscar" class="search-button">
+        </form>
         <nav>
           <ul>
             <li><a href="./about.php">Acerca de</a></li>
